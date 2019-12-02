@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".UploadActivity"
+    >
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <ImageView
+        android:tooltipText="Click"
+        android:id="@+id/upimg"
+        android:src="@drawable/ic_file_upload_black_24dp"
+        android:layout_centerHorizontal="true"
+        android:layout_width="244dp"
+        android:layout_height="193dp"
+        android:onClick="getimg"
+        />
+
+    <EditText
+        android:id="@+id/upedit"
+        android:textSize="20dp"
+        android:textColor="#ff22"
+        android:textAlignment="center"
+        android:text="Hello"
+        android:layout_below="@id/upimg"
+        android:layout_centerHorizontal="true"
+        android:layout_width="244dp"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:layout_marginTop="50dp"
+        android:id="@+id/upbtn"
+        android:textSize="20dp"
+        android:textColor="#3F51B5"
+        android:textAlignment="center"
+        android:text="Update"
+        android:layout_below="@id/upedit"
+        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:background="#CDDC39"
+        android:onClick="Update"
+        />
+
+</RelativeLayout>

@@ -14,9 +14,11 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.util.Log;
+import android.view.Display;
 import android.view.MenuInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -41,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
     FirebaseDatabase database;
     FirebaseStorage storage;
     String fileurl;
+    EditText nameed;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
         sel=findViewById(R.id.select);
         noti=findViewById(R.id.notifi);
         fetch=findViewById(R.id.fetch);
+        nameed=findViewById(R.id.name);
 
     }
 
@@ -99,15 +103,17 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void uploadfile(Uri uri) {
+
         progressDialog=new ProgressDialog(this);
         progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
         progressDialog.setTitle("Uploading file...");
         progressDialog.setProgress(0);
         progressDialog.show();
-        final  String tm=System.currentTimeMillis()+".pdf";
         final  String tm1=System.currentTimeMillis()+"";
+        final  String tm=tm1+".pdf";
+
         final StorageReference storageReference=storage.getReference().child("Uploads").child(tm);
-        final DatabaseReference databaseReference=database.getReference();
+        final DatabaseReference databaseReference=database.getReference("Uploads");
         final UploadTask uploadTask=storageReference.putFile(uri);
         uploadTask.addOnFailureListener(new OnFailureListener() {
             @Override
@@ -136,7 +142,10 @@ public class MainActivity extends AppCompatActivity {
                         if(task.isSuccessful()){
                             Uri uri1=task.getResult();
                             fileurl=uri1.toString();
-                            databaseReference.child(tm1).setValue(fileurl).addOnSuccessListener(new OnSuccessListener<Void>() {
+                            String fname=nameed.getText().toString().trim();
+                            Model model = new Model(fname,fileurl);
+
+                            databaseReference.child(tm1).setValue(model).addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
                                 public void onSuccess(Void aVoid) {
                                     Toast.makeText(MainActivity.this, "Data saved to database successfully", Toast.LENGTH_SHORT).show();
